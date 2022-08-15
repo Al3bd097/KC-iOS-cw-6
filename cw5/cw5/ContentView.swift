@@ -10,50 +10,16 @@ import SwiftUI
 struct ContentView: View {
     @State var counter: [Int] = [0, 0, 0]
     var body: some View {
-        VStack{
-            HStack{
-                Text("أستغفر الله العظيم").font(.title)
-                Spacer()
-                Text("\(counter[0])")
-                    .font(.largeTitle)
-                    .frame(width: 100, height: 100, alignment: .center)
-                    .foregroundColor(.white)
-                    .background(Color.green)
-                    .clipShape(Circle())
-                    .padding()
-                    .onTapGesture {
-                        counter[0] = counter[0] + 1
-                    }
-            }.padding()
-            HStack{
-                Spacer()
-                Text("الحمدلله").font(.title)
-                Spacer()
-                Text("\(counter[1])")
-                    .font(.largeTitle)
-                    .frame(width: 100, height: 100, alignment: .center)
-                    .foregroundColor(.white)
-                    .background(Color.green)
-                    .clipShape(Circle())
-                    .padding()
-                    .onTapGesture {
-                        counter[1] = counter[1] + 1
-                    }
-            }.padding()
-            HStack{
-                Text("سبحان الله وبحمده").font(.title)
-                Spacer()
-                Text("\(counter[2])")
-                    .font(.largeTitle)
-                    .frame(width: 100, height: 100, alignment: .center)
-                    .foregroundColor(.white)
-                    .background(Color.green)
-                    .clipShape(Circle())
-                    .padding()
-                    .onTapGesture {
-                        counter[2] = counter[2] + 1
-                    }
-            }.padding()
+        ZStack {
+            Color.indigo
+                .ignoresSafeArea()
+            VStack{
+                ExtractedView(myCounter: $counter, name: "استغفر الله العظيم", numb: 0)
+                
+                ExtractedView(myCounter: $counter, name: "سبحان الله و بحمده", numb: 1)
+                ExtractedView(myCounter: $counter, name: "سبحان الله العظيم", numb: 2)
+
+            }
         }
     }
 }
@@ -64,5 +30,31 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct ExtractedView: View {
+    @Binding var myCounter: [Int]
+    var name: String
+    var numb: Int
+    var body: some View {
+        HStack{
+            Text("\(name)")
+                .font(.system(size: 50, weight: .medium, design: .serif))
+            Spacer()
+            Text("\(myCounter[numb])")
+                .font(.system(size: 70, weight: .medium, design: .rounded))
+                .frame(width: 100, height: 100, alignment: .center)
+                .foregroundColor(.white)
+                .background(Color.green)
+                .clipShape(Circle())
+                .padding()
+                .onTapGesture {
+                    myCounter[numb] = myCounter[numb] + 1
+                }
+        }.padding()
+            .background(.white.opacity(0.3))
+            .cornerRadius(24)
+            .padding()
     }
 }
